@@ -9,6 +9,7 @@ Due to environment limitations there is no generated build or installed dependen
 - **Standalone components** - All components are marked `standalone: true`.
 - **New control flow** - The `@for` block is used inside templates.
 - **Signals** - A simple `ProductService` exposes products via signals.
+- **Angular Material** - UI components provided by Angular Material are available.
 
 ## Structure
 
