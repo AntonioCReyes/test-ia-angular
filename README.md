@@ -17,7 +17,11 @@ Due to environment limitations there is no generated build or installed dependen
 - `src/app.component.ts` – root component using the new style guide.
 - `src/product-list.component.ts` – lists products using the `@for` control flow.
 - `src/product.service.ts` – provides products via an Angular signal.
-- `tsconfig.json` – minimal TypeScript configuration targeting ES2022.
+- `angular.json` – minimal Angular CLI workspace configuration.
+- `tsconfig.json` – base TypeScript configuration targeting ES2022.
+- `tsconfig.app.json` – application-specific TypeScript settings.
+- `src/index.html` – host page used by Angular CLI.
+- `src/styles.css` – global styles for the demo.
 
 To run the project locally, install Angular CLI and dependencies:
 
