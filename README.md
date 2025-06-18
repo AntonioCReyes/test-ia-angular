@@ -18,6 +18,8 @@ Due to environment limitations there is no generated build or installed dependen
 - `src/product-list.component.ts` – lists products using the `@for` control flow.
 - `src/product.service.ts` – provides products via an Angular signal.
 - `angular.json` – minimal Angular CLI workspace configuration.
+- `serve.options.buildTarget` in `angular.json` links the dev server to the build
+  target.
 - `tsconfig.json` – base TypeScript configuration targeting ES2022.
 - `tsconfig.app.json` – application-specific TypeScript settings.
 - `src/index.html` – host page used by Angular CLI.
