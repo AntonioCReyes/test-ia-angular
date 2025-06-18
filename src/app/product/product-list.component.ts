@@ -12,7 +12,7 @@ import { ProductService } from './product.service';
     <ul>
       @for (product of products(); track product.id) {
         <li>
-          <a [routerLink]="['/product', product.id]">{{ product.name }}</a>
+          <a [routerLink]="['/products', product.id]">{{ product.name }}</a>
         </li>
       }
     </ul>
