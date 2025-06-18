@@ -1,35 +1,59 @@
-# Online Store - Angular 20
+# OnlineStore
 
-This repository contains a minimal example of an online store built with Angular 20 features such as standalone components, the new control flow syntax, and signals.
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
 
-Due to environment limitations there is no generated build or installed dependencies. The structure is intentionally small so you can run `npm install` and `ng build` locally once you have access to the internet.
+## Development server
 
-## Features
-
-- **Standalone components** - All components are marked `standalone: true`.
-- **New control flow** - The `@for` block is used inside templates.
-- **Signals** - A simple `ProductService` exposes products via signals.
-- **Angular Material** - UI components provided by Angular Material are available.
-
-## Structure
-
-- `src/main.ts` – bootstraps the standalone `AppComponent` and router.
-- `src/app.component.ts` – root component using the new style guide.
-- `src/product-list.component.ts` – lists products using the `@for` control flow.
-- `src/product.service.ts` – provides products via an Angular signal.
-- `angular.json` – minimal Angular CLI workspace configuration.
-- `serve.options.buildTarget` in `angular.json` links the dev server to the build
-  target.
-- `tsconfig.json` – base TypeScript configuration targeting ES2022.
-- `tsconfig.app.json` – application-specific TypeScript settings.
-- `src/index.html` – host page used by Angular CLI.
-- `src/styles.css` – global styles for the demo.
-
-To run the project locally, install Angular CLI and dependencies:
+To start a local development server, run:
 
 ```bash
-npm install
 ng serve
 ```
 
-This will compile the project using the latest Angular release.
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+
+## Code scaffolding
+
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+
+```bash
+ng generate component component-name
+```
+
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+
+```bash
+ng generate --help
+```
+
+## Building
+
+To build the project run:
+
+```bash
+ng build
+```
+
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+
+## Running unit tests
+
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+
+```bash
+ng test
+```
+
+## Running end-to-end tests
+
+For end-to-end (e2e) testing, run:
+
+```bash
+ng e2e
+```
+
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Additional Resources
+
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
