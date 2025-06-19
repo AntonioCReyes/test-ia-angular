@@ -1,26 +1,31 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, ChangeDetectionStrategy, computed, inject, input } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 import { ProductService } from './product.service';
-import { Product } from './product';
 
 @Component({
   selector: 'product-detail',
-  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [NgOptimizedImage],
   template: `
-    @if (product; as p) {
+    @if (product(); as p) {
       <h2>{{ p.name }}</h2>
+      <img
+        [ngSrc]="p.imageUrl"
+        alt="{{ p.name }}"
+        width="200"
+        height="200"
+      />
       <p>Price: {{ p.price }}</p>
+      <p>Rating: {{ p.rate }}</p>
+      <p>Tags: {{ p.tags.join(', ') }}</p>
+      <p>{{ p.description }}</p>
     } @else {
       <p>Product not found</p>
     }
   `,
 })
-export class ProductDetailComponent implements OnChanges {
-  @Input() id!: number;
-  product?: Product;
-
-  constructor(private service: ProductService) {}
-
-  ngOnChanges() {
-    this.product = this.service.getProductById(Number(this.id));
-  }
+export class ProductDetailComponent {
+  id = input<number>();
+  private service = inject(ProductService);
+  product = computed(() => this.service.getProductById(Number(this.id())));
 }
