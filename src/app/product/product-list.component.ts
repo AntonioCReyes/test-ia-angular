@@ -23,14 +23,12 @@ import { ProductListItemComponent } from './product-list-item.component';
         height: 100%;
       }
 
-      .cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper,
       .viewport {
         height: 100%;
         width: 100%;
       }
 
       .grid-container {
-        height: 100%;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
       }
