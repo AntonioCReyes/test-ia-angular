@@ -14,7 +14,7 @@ function createProducts(count: number): Product[] {
   }));
 }
 
-const ALL_PRODUCTS = createProducts(100);
+const ALL_PRODUCTS = createProducts(1000);
 const LOAD_SIZE = 20;
 
 @Injectable({ providedIn: 'root' })
