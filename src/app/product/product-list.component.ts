@@ -4,10 +4,14 @@ import {
   inject,
   OnInit,
   computed,
+  viewChild,
 } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import {
+  CdkVirtualScrollViewport,
+  ScrollingModule,
+} from '@angular/cdk/scrolling';
 import { Product } from './product';
 import { ProductService } from './product.service';
 import { ProductSkeletonComponent } from './product-skeleton.component';
@@ -38,7 +42,7 @@ import { ProductSkeletonComponent } from './product-skeleton.component';
     <cdk-virtual-scroll-viewport
       itemSize="120"
       class="viewport"
-      (scrolledIndexChange)="onScroll($event)"
+      (scrolledIndexChange)="onScroll()"
     >
       <div
         *cdkVirtualFor="let item of items(); trackBy: trackByItem"
@@ -66,6 +70,8 @@ export class ProductListComponent implements OnInit {
   products = this.service.products;
   loading = this.service.loading;
 
+  viewport = viewChild(CdkVirtualScrollViewport);
+
   skeletonCount = computed(() =>
     Math.min(this.service.loadSize, this.service.remaining())
   );
@@ -84,9 +90,10 @@ export class ProductListComponent implements OnInit {
     this.service.loadMore();
   }
 
-  onScroll(index: number) {
+  onScroll() {
+    const end = this.viewport().getRenderedRange().end;
     const threshold = this.products().length - 5;
-    if (index >= threshold && this.service.hasMore() && !this.loading()) {
+    if (end >= threshold && this.service.hasMore() && !this.loading()) {
       this.service.loadMore();
     }
   }
