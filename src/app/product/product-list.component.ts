@@ -19,7 +19,7 @@ import { ProductSkeletonComponent } from './product-skeleton.component';
   styles: [
     `
       .viewport {
-        height: 400px;
+        height: 100%;
         width: 100%;
       }
 
