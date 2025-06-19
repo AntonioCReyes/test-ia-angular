@@ -6,9 +6,16 @@ import {
   MatSidenavContent,
 } from '@angular/material/sidenav';
 import { MatToolbar } from '@angular/material/toolbar';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatAnchor, MatButton, MatIconButton} from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { MatList, MatListItem, MatNavList } from '@angular/material/list';
+import {
+  MatList,
+  MatListItem,
+  MatListItemIcon,
+  MatListItemTitle,
+  MatListModule,
+  MatNavList
+} from '@angular/material/list';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
@@ -24,8 +31,11 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
     MatIcon,
     MatNavList,
     MatListItem,
-    MatIconButton
+    MatListItemIcon,
+    MatListItemTitle,
+    MatIconButton,
   ],
+
   template: `
     <mat-sidenav-container>
       <mat-sidenav
@@ -35,7 +45,10 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
         class="app-sidenav">
         <h1>Online Store</h1>
         <mat-nav-list>
-          <a mat-list-item  routerLink="/products" (click)="drawer.toggle()">Products</a>
+          <mat-list-item>
+            <a matListItemTitle routerLink="/products">Products</a>
+            <mat-icon matListItemIcon>home</mat-icon>
+          </mat-list-item>
         </mat-nav-list>
       </mat-sidenav>
 
