@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import {Component, ChangeDetectionStrategy, inject, ViewEncapsulation} from '@angular/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { Product } from './product';
 import { ProductDataSource } from './product-data-source';
@@ -8,34 +8,36 @@ import { ProductListItemComponent } from './product-list-item.component';
 @Component({
   selector: 'product-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ScrollingModule, ProductSkeletonComponent, ProductListItemComponent],
+  encapsulation: ViewEncapsulation.None,
+  imports: [ScrollingModule, ProductListItemComponent],
   providers: [ProductDataSource],
   styles: [
     `
+      :host {
+        display: block;
+        height: 100%;
+      }
+
+      .cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper,
       .viewport {
         height: 100%;
         width: 100%;
       }
 
-      .item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px;
-        box-sizing: border-box;
-        height: 120px;
+      .grid-container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
       }
     `,
   ],
   template: `
     <h2>Products</h2>
     <cdk-virtual-scroll-viewport itemSize="120" class="viewport">
-      <div *cdkVirtualFor="let item of dataSource; trackBy: trackByItem" class="item">
-        @if (item) {
-          <product-list-item [product]="item"></product-list-item>
-        } @else {
-          <product-skeleton></product-skeleton>
-        }
+      <div class="grid-container">
+        <ng-container *cdkVirtualFor="let item of dataSource;">
+            <product-list-item [product]="item"></product-list-item>
+        </ng-container>
       </div>
     </cdk-virtual-scroll-viewport>
   `,
