@@ -15,6 +15,9 @@ import { ProductListItemComponent } from './product-list-item.component';
       .viewport {
         height: 100%;
         width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 16px;
       }
 
       .item {
