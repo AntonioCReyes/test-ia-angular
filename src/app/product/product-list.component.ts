@@ -1,8 +1,13 @@
-import {Component, ChangeDetectionStrategy, inject, ViewEncapsulation} from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  inject,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { Product } from './product';
 import { ProductDataSource } from './product-data-source';
-import { ProductSkeletonComponent } from './product-skeleton.component';
+import { ProductRowDataSource } from './product-row-data-source';
 import { ProductListItemComponent } from './product-list-item.component';
 
 @Component({
@@ -10,7 +15,7 @@ import { ProductListItemComponent } from './product-list-item.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [ScrollingModule, ProductListItemComponent],
-  providers: [ProductDataSource],
+  providers: [ProductDataSource, ProductRowDataSource],
   styles: [
     `
       :host {
@@ -35,17 +40,22 @@ import { ProductListItemComponent } from './product-list-item.component';
     <h2>Products</h2>
     <cdk-virtual-scroll-viewport itemSize="120" class="viewport">
       <div class="grid-container">
-        <ng-container *cdkVirtualFor="let item of dataSource;">
+        <ng-container *cdkVirtualFor="let row of rowData; trackBy: trackByRow">
+          @for (item of row; track trackByItem) {
             <product-list-item [product]="item"></product-list-item>
+          }
         </ng-container>
       </div>
     </cdk-virtual-scroll-viewport>
   `,
 })
 export class ProductListComponent {
-  dataSource = inject(ProductDataSource);
+  rowData = inject(ProductRowDataSource);
 
-  trackByItem(index: number, item: Product | undefined) {
+  trackByRow(index: number): number {
+    return index;
+  }
+  trackByItem(index: number, item: Product | undefined): number | string {
     return item ? item.id : `skeleton-${index}`;
   }
 }
