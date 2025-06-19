@@ -22,6 +22,7 @@ export class ProductService {
   private all = ALL_PRODUCTS;
   private index = 0;
   readonly loadSize = LOAD_SIZE;
+  readonly total = ALL_PRODUCTS.length;
 
   private productsSignal = signal<Product[]>([]);
   products = this.productsSignal.asReadonly();
@@ -47,6 +48,13 @@ export class ProductService {
 
   remaining(): number {
     return this.all.length - this.index;
+  }
+
+  async fetch(offset: number, limit: number): Promise<Product[]> {
+    const start = offset;
+    const end = Math.min(offset + limit, this.all.length);
+    await new Promise((r) => setTimeout(r, 1500));
+    return this.all.slice(start, end);
   }
 
   getProductById(id: number): Product | undefined {
