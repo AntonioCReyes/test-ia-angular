@@ -40,8 +40,8 @@ import { ProductListItemComponent } from './product-list-item.component';
         <h2>Products</h2>
         <cdk-virtual-scroll-viewport itemSize="266" class="viewport">
           <div class="grid-container">
-            <ng-container *cdkVirtualFor="let row of rowData; trackBy: trackByRow">
-              @for (item of row; track trackByItem) {
+            <ng-container *cdkVirtualFor="let row of rowData; trackBy: trackByRow; let rowIndex = index">
+              @for (item of row; track trackByItem(rowIndex)) {
                 <product-list-item [product]="item"></product-list-item>
               }
             </ng-container>
@@ -55,7 +55,8 @@ export class ProductListComponent {
   trackByRow(index: number): number {
     return index;
   }
-  trackByItem(index: number, item: Product | undefined): number | string {
-    return item ? item.id : `skeleton-${index}`;
+  trackByItem(rowIndex: number) {
+    return (index: number, item: Product | undefined): number | string =>
+      item ? item.id : `skeleton-${rowIndex}-${index}`;
   }
 }
