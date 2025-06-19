@@ -32,5 +32,5 @@ import { Product } from './product';
   `,
 })
 export class ProductListItemComponent {
-  product = input<Product>();
+  product = input.required<Product>();
 }
