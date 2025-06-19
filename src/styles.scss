@@ -11,22 +11,27 @@ html, body {
 
 mat-sidenav {
   width: 200px;
+  background-color: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
 }
 
 mat-sidenav-content {
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: hidden;
 }
 
 .content {
   padding: 16px;
   flex: 1 1 auto;
+  overflow-y: auto;
 }
 
 .app-footer {
   text-align: center;
   padding: 8px;
+  margin-top: auto;
 }
 
 // Include core styles for Angular Material
