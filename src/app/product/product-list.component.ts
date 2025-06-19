@@ -38,7 +38,7 @@ import { ProductListItemComponent } from './product-list-item.component';
   ],
   template: `
         <h2>Products</h2>
-        <cdk-virtual-scroll-viewport itemSize="250" class="viewport">
+        <cdk-virtual-scroll-viewport itemSize="266" class="viewport">
           <div class="grid-container">
             <ng-container *cdkVirtualFor="let row of rowData; trackBy: trackByRow">
               @for (item of row; track trackByItem) {

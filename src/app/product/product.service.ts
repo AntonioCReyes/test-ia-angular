@@ -20,40 +20,16 @@ const LOAD_SIZE = 20;
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private all = ALL_PRODUCTS;
-  private index = 0;
   readonly loadSize = LOAD_SIZE;
   readonly total = ALL_PRODUCTS.length;
 
   private productsSignal = signal<Product[]>([]);
   products = this.productsSignal.asReadonly();
-  loading = signal(false);
-
-  hasMore(): boolean {
-    return this.index < this.all.length;
-  }
-
-  async loadMore(): Promise<void> {
-    if (!this.hasMore()) {
-      return;
-    }
-
-    this.loading.set(true);
-    const next = Math.min(this.index + this.loadSize, this.all.length);
-    const items = this.all.slice(this.index, next);
-    await new Promise((r) => setTimeout(r, 1500));
-    this.productsSignal.update((p) => [...p, ...items]);
-    this.index = next;
-    this.loading.set(false);
-  }
-
-  remaining(): number {
-    return this.all.length - this.index;
-  }
 
   async fetch(offset: number, limit: number): Promise<Product[]> {
     const start = offset;
     const end = Math.min(offset + limit, this.all.length);
-    await new Promise((r) => setTimeout(r, 1500));
+    await new Promise((r) => setTimeout(r, 500));
     return this.all.slice(start, end);
   }
 

@@ -14,22 +14,16 @@ import {
   imports: [
     MatCard,
     MatCardContent,
-    MatCardImage,
-    MatCardTitle,
-    MatCardFooter,
     MatCardActions,
   ],
   template: `
     <mat-card class="skeleton-item">
       <mat-card-content>
         <div class="skeleton-img"></div>
-        <h3 mat-card-title>
-          <span class="skeleton-text title"></span>
-        </h3>
       </mat-card-content>
-      <mat-card-footer>
+      <mat-card-content style="height: 16px">
         <span class="skeleton-text price"></span>
-      </mat-card-footer>
+      </mat-card-content>
       <mat-card-actions>
         <span class="skeleton-btn"></span>
       </mat-card-actions>
@@ -41,7 +35,6 @@ import {
         display: flex;
         flex-direction: column;
         gap: 8px;
-        padding: 8px;
         box-sizing: border-box;
         height: 250px;
         animation: pulse 1.5s infinite;
@@ -59,21 +52,17 @@ import {
         background: #ddd;
       }
 
-      .skeleton-text.title {
-        width: 60%;
-        margin-top: 8px;
-      }
-
       .skeleton-text.price {
         width: 40%;
       }
 
       .skeleton-btn {
-        width: 80px;
+        width: 100%;
         height: 36px;
         background: #ddd;
         border-radius: 4px;
       }
+
 
       @keyframes pulse {
         0% {
