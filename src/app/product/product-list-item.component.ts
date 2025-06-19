@@ -38,11 +38,24 @@ import { ProductSkeletonComponent } from './product-skeleton.component';
         box-sizing: border-box;
         height: 250px;
       }
+
+      .fade-in {
+        animation: fade-in 0.3s ease-in;
+      }
+
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
     `,
   ],
   template: `
     @if (product(); as pr) {
-      <mat-card class="item">
+      <mat-card class="item fade-in">
         <mat-card-content>
           <h3 mat-card-title>{{ pr.name }}</h3>
           <img
