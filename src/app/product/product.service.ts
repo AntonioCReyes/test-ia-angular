@@ -45,6 +45,10 @@ export class ProductService {
     this.loading.set(false);
   }
 
+  remaining(): number {
+    return this.all.length - this.index;
+  }
+
   getProductById(id: number): Product | undefined {
     return this.all.find((p) => p.id === id);
   }
