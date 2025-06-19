@@ -2,6 +2,14 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
 
+## Installation
+
+Before running or testing the application, install the project dependencies:
+
+```bash
+pnpm install
+```
+
 ## Development server
 
 To start a local development server, run:
