@@ -6,7 +6,7 @@ import { Product } from './product';
   selector: 'product-detail',
   standalone: true,
   template: `
-    @if (product as p) {
+    @if (product; as p) {
       <h2>{{ p.name }}</h2>
       <p>Price: {{ p.price }}</p>
     } @else {
