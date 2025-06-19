@@ -18,7 +18,17 @@ export class ProductRowDataSource extends DataSource<(Product | undefined)[]> {
   private readonly perRow = 4;
 
   connect(viewer: CollectionViewer): Observable<(Product | undefined)[][]> {
-    return this.base.connect(viewer).pipe(map((items) => chunkArray(items, this.perRow)));
+    const adaptedViewer: CollectionViewer = {
+      viewChange: viewer.viewChange.pipe(
+        map((range) => ({
+          start: range.start * this.perRow,
+          end: range.end * this.perRow,
+        }))
+      ),
+    };
+    return this.base
+      .connect(adaptedViewer)
+      .pipe(map((items) => chunkArray(items, this.perRow)));
   }
 
   disconnect(): void {
