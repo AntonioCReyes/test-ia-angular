@@ -1,42 +1,78 @@
 import { Component, ChangeDetectionStrategy, computed, inject, input } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
-import {MatCard, MatCardContent} from '@angular/material/card';
 import { ProductService } from './product.service';
 
 @Component({
   selector: 'product-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgOptimizedImage, MatCard, MatCardContent],
+  imports: [NgOptimizedImage],
   template: `
     @if (product(); as p) {
-      <mat-card>
-        <mat-card-content>
+      <article class="detail">
+        <header>
+          <h2 class="name">{{ p.name }}</h2>
+        </header>
+        <figure class="preview">
           <img
             [ngSrc]="p.imageUrl"
-            alt="{{ p.name }}"
-            width="200"
-            height="200"
+            alt=""
+            width="300"
+            height="300"
           />
-          <h2>{{ p.name }}</h2>
-          <p>Tags: {{ p.tags.join(', ') }}</p>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card>
-        <mat-card-content>
-          <p>Price: {{ p.price }}</p>
-          <p>Rating: {{ p.rate }}</p>
-          <p>{{ p.description }}</p>
-        </mat-card-content>
-      </mat-card>
+          <figcaption class="visually-hidden">{{ p.name }}</figcaption>
+        </figure>
+        <section class="meta">
+          <p class="price">$ {{ p.price }}</p>
+          <p class="rating">Rating: {{ p.rate }}</p>
+          <ul class="tags">
+            @for (tag of p.tags; track tag) {
+              <li>{{ tag }}</li>
+            }
+          </ul>
+          <p class="description">{{ p.description }}</p>
+        </section>
+      </article>
     } @else {
       <p>Product not found</p>
     }
   `,
   styles: [
     `
-      .mat-mdc-card + .mat-mdc-card {
-        margin-top: 1rem;
+      .detail {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 1rem;
+        align-items: start;
+      }
+
+      figure {
+        margin: 0;
+      }
+
+      .meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .tags {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
       }
     `
   ]
