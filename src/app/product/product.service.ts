@@ -39,7 +39,7 @@ export class ProductService {
     this.loading.set(true);
     const next = Math.min(this.index + this.loadSize, this.all.length);
     const items = this.all.slice(this.index, next);
-    await new Promise((r) => setTimeout(r, 500));
+    await new Promise((r) => setTimeout(r, 1500));
     this.productsSignal.update((p) => [...p, ...items]);
     this.index = next;
     this.loading.set(false);

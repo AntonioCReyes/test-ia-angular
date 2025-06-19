@@ -91,9 +91,9 @@ export class ProductListComponent implements OnInit {
   }
 
   onScroll() {
-    const end = this.viewport().getRenderedRange().end;
+    const end = this.viewport()?.getRenderedRange().end;
     const threshold = this.products().length - 5;
-    if (end >= threshold && this.service.hasMore() && !this.loading()) {
+    if (end && end >= threshold && this.service.hasMore() && !this.loading()) {
       this.service.loadMore();
     }
   }
