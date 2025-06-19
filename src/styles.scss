@@ -33,18 +33,16 @@ mat-sidenav-content {
 @include mat.core();
 
 // Define the application's theme using the Material 20 API
-$online-store-theme: mat.define-theme((
-  color: (
+html {
+  @include mat.theme((
+    color: (
     theme-type: light,
-    primary: mat.$indigo-palette,
-    tertiary: mat.$pink-palette,
-  ),
-  typography: mat.define-typography-config(),
-  density: 0,
-));
-
-@include mat.all-component-themes($online-store-theme);
-
-:root {
-  @include mat.all-component-vars($online-store-theme);
+    primary: mat.$violet-palette,
+    tertiary: mat.$azure-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
 }
+
+
