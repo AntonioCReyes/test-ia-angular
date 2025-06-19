@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import {
   MatSidenav,
@@ -13,7 +13,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterOutlet,
     RouterLink,
@@ -31,8 +31,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
     <mat-sidenav-container class="app-container">
       <mat-sidenav
         #drawer
-        [mode]="isLargeScreen ? 'side' : 'over'"
-        [opened]="isLargeScreen"
+        [mode]="isLargeScreen() ? 'side' : 'over'"
+        [opened]="isLargeScreen()"
         class="app-sidenav"
       >
         <mat-nav-list>
@@ -44,14 +44,15 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
       <mat-sidenav-content>
         <mat-toolbar color="primary">
-          <button
-            type="button"
-            mat-icon-button
-            (click)="drawer.toggle()"
-            *ngIf="!isLargeScreen"
-          >
-            <mat-icon>menu</mat-icon>
-          </button>
+          @if (!isLargeScreen()) {
+            <button
+              type="button"
+              mat-icon-button
+              (click)="drawer.toggle()"
+            >
+              <mat-icon>menu</mat-icon>
+            </button>
+          }
           <span>Online Store</span>
         </mat-toolbar>
         <main class="content">
@@ -63,13 +64,14 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   `,
 })
 export class AppComponent {
-  isLargeScreen = false;
+  private breakpoint = inject(BreakpointObserver);
+  isLargeScreen = signal(false);
 
-  constructor(private breakpoint: BreakpointObserver) {
+  constructor() {
     this.breakpoint
       .observe([Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
       .subscribe((result) => {
-        this.isLargeScreen = result.matches;
+        this.isLargeScreen.set(result.matches);
       });
   }
 }
