@@ -6,8 +6,6 @@ import {
   computed,
   viewChild,
 } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import {
   CdkVirtualScrollViewport,
   ScrollingModule,
@@ -15,11 +13,12 @@ import {
 import { Product } from './product';
 import { ProductService } from './product.service';
 import { ProductSkeletonComponent } from './product-skeleton.component';
+import { ProductListItemComponent } from './product-list-item.component';
 
 @Component({
   selector: 'product-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, NgOptimizedImage, ScrollingModule, ProductSkeletonComponent],
+  imports: [ScrollingModule, ProductSkeletonComponent, ProductListItemComponent],
   styles: [
     `
       .viewport {
@@ -49,15 +48,7 @@ import { ProductSkeletonComponent } from './product-skeleton.component';
         class="item"
       >
         @if (item) {
-          <a [routerLink]="['/products', item.id]" class="link">
-            <img
-              [ngSrc]="item.imageUrl"
-              alt="{{ item.name }}"
-              width="100"
-              height="100"
-            />
-            <span>{{ item.name }}</span>
-          </a>
+          <product-list-item [product]="item"></product-list-item>
         } @else {
           <product-skeleton></product-skeleton>
         }
