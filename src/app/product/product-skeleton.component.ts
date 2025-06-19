@@ -1,37 +1,78 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardFooter,
+  MatCardImage,
+  MatCardTitle,
+} from '@angular/material/card';
 
 @Component({
   selector: 'product-skeleton',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MatCard,
+    MatCardContent,
+    MatCardImage,
+    MatCardTitle,
+    MatCardFooter,
+    MatCardActions,
+  ],
   template: `
-    <div class="skeleton-item">
-      <div class="skeleton-img"></div>
-      <div class="skeleton-text"></div>
-    </div>
+    <mat-card class="skeleton-item">
+      <mat-card-content>
+        <div class="skeleton-img"></div>
+        <h3 mat-card-title>
+          <span class="skeleton-text title"></span>
+        </h3>
+      </mat-card-content>
+      <mat-card-footer>
+        <span class="skeleton-text price"></span>
+      </mat-card-footer>
+      <mat-card-actions>
+        <span class="skeleton-btn"></span>
+      </mat-card-actions>
+    </mat-card>
   `,
   styles: [
     `
       .skeleton-item {
         display: flex;
-        align-items: center;
+        flex-direction: column;
         gap: 8px;
         padding: 8px;
         box-sizing: border-box;
-        height: 120px;
+        height: 250px;
         animation: pulse 1.5s infinite;
-        background: #eee;
       }
 
       .skeleton-img {
-        width: 100px;
-        height: 100px;
+        width: 100%;
+        height: 150px;
         background: #ccc;
       }
 
       .skeleton-text {
-        width: 150px;
+        display: block;
         height: 16px;
         background: #ddd;
+      }
+
+      .skeleton-text.title {
+        width: 60%;
+        margin-top: 8px;
+      }
+
+      .skeleton-text.price {
+        width: 40%;
+      }
+
+      .skeleton-btn {
+        width: 80px;
+        height: 36px;
+        background: #ddd;
+        border-radius: 4px;
       }
 
       @keyframes pulse {
