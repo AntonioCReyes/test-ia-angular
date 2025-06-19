@@ -32,6 +32,19 @@ mat-sidenav-content {
 // Include core styles for Angular Material
 @include mat.core();
 
-// Use the indigo-pink prebuilt theme
-@include mat.all-component-typographies(mat.define-typography-config());
-@include mat.all-component-themes(mat.define-palette(mat.$indigo-palette), mat.define-palette(mat.$pink-palette), mat.define-palette(mat.$grey-palette));
+// Define the application's theme using the Material 20 API
+$online-store-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$indigo-palette,
+    tertiary: mat.$pink-palette,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+@include mat.all-component-themes($online-store-theme);
+
+:root {
+  @include mat.all-component-vars($online-store-theme);
+}
