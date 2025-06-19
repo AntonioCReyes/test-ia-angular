@@ -9,4 +9,8 @@ export class ProductService {
   ]);
 
   products = this.productsSignal.asReadonly();
+
+  getProductById(id: number): Product | undefined {
+    return this.productsSignal().find((p) => p.id === id);
+  }
 }
