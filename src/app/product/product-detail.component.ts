@@ -1,24 +1,34 @@
 import { Component, ChangeDetectionStrategy, computed, inject, input } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
+import { MatCard } from '@angular/material/card';
 import { ProductService } from './product.service';
 
 @Component({
   selector: 'product-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgOptimizedImage],
+  imports: [NgOptimizedImage, MatCard],
   template: `
     @if (product(); as p) {
-      <h2>{{ p.name }}</h2>
-      <img
-        [ngSrc]="p.imageUrl"
-        alt="{{ p.name }}"
-        width="200"
-        height="200"
-      />
-      <p>Price: {{ p.price }}</p>
-      <p>Rating: {{ p.rate }}</p>
-      <p>Tags: {{ p.tags.join(', ') }}</p>
-      <p>{{ p.description }}</p>
+      <mat-card>
+        <mat-card-content>
+          <img
+            [ngSrc]="p.imageUrl"
+            alt="{{ p.name }}"
+            width="200"
+            height="200"
+          />
+          <h2>{{ p.name }}</h2>
+          <p>Tags: {{ p.tags.join(', ') }}</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-content>
+          <p>Price: {{ p.price }}</p>
+          <p>Rating: {{ p.rate }}</p>
+          <p>{{ p.description }}</p>
+        </mat-card-content>
+      </mat-card>
     } @else {
       <p>Product not found</p>
     }
