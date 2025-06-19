@@ -1,32 +1,51 @@
 import { Injectable, signal } from '@angular/core';
 import { Product } from './product';
 
+function createProducts(count: number): Product[] {
+  const tags = ['popular', 'new', 'sale', 'featured', 'limited'];
+  return Array.from({ length: count }).map((_, i) => ({
+    id: i + 1,
+    name: `Product ${i + 1}`,
+    price: ((i * 17) % 100) + 1,
+    imageUrl: `https://picsum.photos/seed/product-${i + 1}/200/200`,
+    rate: ((i * 11) % 5) + 1,
+    tags: [tags[i % tags.length]],
+    description: `Description for product ${i + 1}.`,
+  }));
+}
+
+const ALL_PRODUCTS = createProducts(100);
+const LOAD_SIZE = 20;
+
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-  private productsSignal = signal<Product[]>([
-    {
-      id: 1,
-      name: 'Item A',
-      price: 10,
-      imageUrl: 'https://picsum.photos/seed/product-1/200/200',
-      rate: 4,
-      tags: ['popular', 'new'],
-      description: 'A great item for everyday use.',
-    },
-    {
-      id: 2,
-      name: 'Item B',
-      price: 20,
-      imageUrl: 'https://picsum.photos/seed/product-2/200/200',
-      rate: 5,
-      tags: ['sale'],
-      description: 'An even better item with premium features.',
-    },
-  ]);
+  private all = ALL_PRODUCTS;
+  private index = 0;
+  readonly loadSize = LOAD_SIZE;
 
+  private productsSignal = signal<Product[]>([]);
   products = this.productsSignal.asReadonly();
+  loading = signal(false);
+
+  hasMore(): boolean {
+    return this.index < this.all.length;
+  }
+
+  async loadMore(): Promise<void> {
+    if (!this.hasMore()) {
+      return;
+    }
+
+    this.loading.set(true);
+    const next = Math.min(this.index + this.loadSize, this.all.length);
+    const items = this.all.slice(this.index, next);
+    await new Promise((r) => setTimeout(r, 500));
+    this.productsSignal.update((p) => [...p, ...items]);
+    this.index = next;
+    this.loading.set(false);
+  }
 
   getProductById(id: number): Product | undefined {
-    return this.productsSignal().find((p) => p.id === id);
+    return this.all.find((p) => p.id === id);
   }
 }
