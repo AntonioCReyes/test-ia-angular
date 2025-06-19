@@ -1,1 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.app-container {
+  height: 100vh;
+}
+
+mat-sidenav {
+  width: 200px;
+}
+
+mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.content {
+  padding: 16px;
+  flex: 1 1 auto;
+}
+
+.app-footer {
+  text-align: center;
+  padding: 8px;
+}
+
+// Include core styles for Angular Material
+@include mat.core();
+
+// Use the indigo-pink prebuilt theme
+@include mat.all-component-typographies(mat.define-typography-config());
+@include mat.all-component-themes(mat.define-palette(mat.$indigo-palette), mat.define-palette(mat.$pink-palette), mat.define-palette(mat.$grey-palette));
