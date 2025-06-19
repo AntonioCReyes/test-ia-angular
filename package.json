@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "jest",
     "serve:ssr:online-store": "node dist/online-store/server/server.mjs"
   },
   "private": true,
@@ -33,7 +33,7 @@
     "@angular/cli": "^19.2.5",
     "@angular/compiler-cli": "^19.2.0",
     "@types/express": "^4.17.17",
-    "@types/jasmine": "~5.1.0",
+    "@types/jest": "^29.5.3",
     "@types/node": "^18.18.0",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",
@@ -41,8 +41,11 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.7.2",
     "@testing-library/angular": "^14.1.1",
     "@testing-library/jasmine-dom": "^1.2.2"
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "~5.7.2"
   }
 }
