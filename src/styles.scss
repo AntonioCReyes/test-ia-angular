@@ -1,43 +1,11 @@
 @use '@angular/material' as mat;
 
+@include mat.core();
+
 html, body {
   height: 100%;
   margin: 0;
 }
-
-.app-container {
-  height: 100vh;
-}
-
-mat-sidenav {
-  width: 200px;
-  background-color: var(--md-sys-color-surface-container-high);
-  color: var(--md-sys-color-on-surface);
-}
-
-mat-sidenav-content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-}
-
-.content {
-  padding: 16px;
-  flex: 1 1 auto;
-  overflow-y: auto;
-}
-
-.app-footer {
-  text-align: center;
-  padding: 8px;
-  margin-top: auto;
-}
-
-// Include core styles for Angular Material
-@include mat.core();
-
-// Define the application's theme using the Material 20 API
 html {
   @include mat.theme((
     color: (
@@ -48,6 +16,41 @@ html {
     typography: Roboto,
     density: 0,
   ));
+}
+
+.mat-drawer {
+  --mat-sidenav-container-shape: 0px;
+  --mat-sidenav-container-background-color:var(--md-sys-color-surface-container-high);
+}
+
+.mat-drawer-side {
+  --mat-sidenav-container-divider-color: var(--mat-sys-surface-container-high);
+  border-right-color: var(--mat-sidenav-container-divider-color, transparent);
+}
+
+.mat-sidenav-container {
+  --mat-sidenav-content-background-color: var(--mat-sys-surface-container);
+}
+
+.mat-sidenav {
+  width: 200px;
+}
+
+.mat-drawer-content.mat-sidenav-content {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+
+  .content {
+    padding: 16px;
+    overflow: auto;
+  }
+
+  .footer {
+    padding: 16px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
 }
 
 
