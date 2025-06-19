@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { Product } from './product';
 import { ProductService } from './product.service';
 import { ProductSkeletonComponent } from './product-skeleton.component';
@@ -41,32 +41,44 @@ import { ProductSkeletonComponent } from './product-skeleton.component';
       (scrolledIndexChange)="onScroll($event)"
     >
       <div
-        *cdkVirtualFor="let product of products(); trackBy: trackById"
+        *cdkVirtualFor="let item of items(); trackBy: trackByItem"
         class="item"
       >
-        <a [routerLink]="['/products', product.id]" class="link">
-          <img
-            [ngSrc]="product.imageUrl"
-            alt="{{ product.name }}"
-            width="100"
-            height="100"
-          />
-          <span>{{ product.name }}</span>
-        </a>
+        @if (item) {
+          <a [routerLink]="['/products', item.id]" class="link">
+            <img
+              [ngSrc]="item.imageUrl"
+              alt="{{ item.name }}"
+              width="100"
+              height="100"
+            />
+            <span>{{ item.name }}</span>
+          </a>
+        } @else {
+          <product-skeleton></product-skeleton>
+        }
       </div>
     </cdk-virtual-scroll-viewport>
-    @if (loading()) {
-      @for (_ of skeletonArray(); track $index) {
-        <product-skeleton></product-skeleton>
-      }
-    }
   `,
 })
 export class ProductListComponent implements OnInit {
   private service = inject(ProductService);
   products = this.service.products;
   loading = this.service.loading;
-  skeletonArray = computed(() => Array.from({ length: this.service.loadSize }, (_, i) => i));
+
+  skeletonCount = computed(() =>
+    Math.min(this.service.loadSize, this.service.remaining())
+  );
+
+  items = computed(() => {
+    const list: Array<Product | undefined> = [...this.products()];
+    if (this.loading()) {
+      list.push(
+        ...Array.from({ length: this.skeletonCount() }, () => undefined)
+      );
+    }
+    return list;
+  });
 
   ngOnInit() {
     this.service.loadMore();
@@ -79,7 +91,7 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-  trackById(_: number, item: Product) {
-    return item.id;
+  trackByItem(index: number, item: Product | undefined) {
+    return item ? item.id : `skeleton-${index}`;
   }
 }
