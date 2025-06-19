@@ -9,7 +9,7 @@ import {
   MatCardFooter,
   MatCardActions,
 } from '@angular/material/card';
-import { MatButton } from '@angular/material/button';
+import {MatAnchor, MatButton} from '@angular/material/button';
 import { Product } from './product';
 import { ProductSkeletonComponent } from './product-skeleton.component';
 
@@ -25,8 +25,8 @@ import { ProductSkeletonComponent } from './product-skeleton.component';
     MatCardTitle,
     MatCardFooter,
     MatCardActions,
-    MatButton,
     ProductSkeletonComponent,
+    MatAnchor,
   ],
   styles: [
     `
@@ -36,14 +36,15 @@ import { ProductSkeletonComponent } from './product-skeleton.component';
         gap: 8px;
         padding: 8px;
         box-sizing: border-box;
-        height: 120px;
+        height: 250px;
       }
     `,
   ],
   template: `
     @if (product(); as pr) {
       <mat-card class="item">
-        <a [routerLink]="['/products', pr.id]">
+        <mat-card-content>
+          <h3 mat-card-title>{{ pr.name }}</h3>
           <img
             mat-card-image
             [ngSrc]="pr.imageUrl"
@@ -51,15 +52,12 @@ import { ProductSkeletonComponent } from './product-skeleton.component';
             width="100"
             height="100"
           />
-        </a>
-        <mat-card-content>
-          <h3 mat-card-title>{{ pr.name }}</h3>
         </mat-card-content>
         <mat-card-footer>
           <span>$ {{ pr.price }}</span>
         </mat-card-footer>
         <mat-card-actions>
-          <a mat-button [routerLink]="['/products', pr.id]">View</a>
+          <a mat-flat-button color="primary" [routerLink]="['/products', pr.id]">View</a>
         </mat-card-actions>
       </mat-card>
     } @else {

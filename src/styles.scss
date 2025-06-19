@@ -19,6 +19,7 @@ html {
 }
 
 .mat-drawer {
+  --mat-sidenav-container-width: 250px;
   --mat-sidenav-container-shape: 0px;
   --mat-sidenav-container-background-color:var(--md-sys-color-surface-container-high);
 }
@@ -30,10 +31,6 @@ html {
 
 .mat-sidenav-container {
   --mat-sidenav-content-background-color: var(--mat-sys-surface-container);
-}
-
-.mat-sidenav {
-  width: 200px;
 }
 
 .mat-drawer-content.mat-sidenav-content {

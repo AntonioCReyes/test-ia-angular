@@ -5,7 +5,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { MatCard } from '@angular/material/card';
+import {MatCard, MatCardContent} from '@angular/material/card';
 import { Product } from './product';
 import { ProductDataSource } from './product-data-source';
 import { ProductRowDataSource } from './product-row-data-source';
@@ -15,7 +15,7 @@ import { ProductListItemComponent } from './product-list-item.component';
   selector: 'product-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [ScrollingModule, MatCard, ProductListItemComponent],
+  imports: [ScrollingModule, ProductListItemComponent],
   providers: [ProductDataSource, ProductRowDataSource],
   styles: [
     `
@@ -32,14 +32,13 @@ import { ProductListItemComponent } from './product-list-item.component';
       .grid-container {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
       }
     `,
   ],
   template: `
-    <mat-card>
-      <mat-card-content>
         <h2>Products</h2>
-        <cdk-virtual-scroll-viewport itemSize="120" class="viewport">
+        <cdk-virtual-scroll-viewport itemSize="250" class="viewport">
           <div class="grid-container">
             <ng-container *cdkVirtualFor="let row of rowData; trackBy: trackByRow">
               @for (item of row; track trackByItem) {
@@ -48,8 +47,6 @@ import { ProductListItemComponent } from './product-list-item.component';
             </ng-container>
           </div>
         </cdk-virtual-scroll-viewport>
-      </mat-card-content>
-    </mat-card>
   `,
 })
 export class ProductListComponent {

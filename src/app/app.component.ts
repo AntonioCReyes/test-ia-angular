@@ -35,7 +35,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
         class="app-sidenav">
         <h1>Online Store</h1>
         <mat-nav-list>
-          <a mat-list-item routerLink="/products" (click)="drawer.toggle()">Products</a>
+          <a mat-list-item  routerLink="/products" (click)="drawer.toggle()">Products</a>
         </mat-nav-list>
       </mat-sidenav>
 

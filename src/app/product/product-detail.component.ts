@@ -1,12 +1,12 @@
 import { Component, ChangeDetectionStrategy, computed, inject, input } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
-import { MatCard } from '@angular/material/card';
+import {MatCard, MatCardContent} from '@angular/material/card';
 import { ProductService } from './product.service';
 
 @Component({
   selector: 'product-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgOptimizedImage, MatCard],
+  imports: [NgOptimizedImage, MatCard, MatCardContent],
   template: `
     @if (product(); as p) {
       <mat-card>
@@ -33,6 +33,13 @@ import { ProductService } from './product.service';
       <p>Product not found</p>
     }
   `,
+  styles: [
+    `
+      .mat-mdc-card + .mat-mdc-card {
+        margin-top: 1rem;
+      }
+    `
+  ]
 })
 export class ProductDetailComponent {
   id = input<number>();
