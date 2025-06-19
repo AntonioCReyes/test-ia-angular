@@ -1,17 +1,7 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  inject,
-  OnInit,
-  computed,
-  viewChild,
-} from '@angular/core';
-import {
-  CdkVirtualScrollViewport,
-  ScrollingModule,
-} from '@angular/cdk/scrolling';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { Product } from './product';
-import { ProductService } from './product.service';
+import { ProductDataSource } from './product-data-source';
 import { ProductSkeletonComponent } from './product-skeleton.component';
 import { ProductListItemComponent } from './product-list-item.component';
 
@@ -19,6 +9,7 @@ import { ProductListItemComponent } from './product-list-item.component';
   selector: 'product-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ScrollingModule, ProductSkeletonComponent, ProductListItemComponent],
+  providers: [ProductDataSource],
   styles: [
     `
       .viewport {
@@ -38,15 +29,8 @@ import { ProductListItemComponent } from './product-list-item.component';
   ],
   template: `
     <h2>Products</h2>
-    <cdk-virtual-scroll-viewport
-      itemSize="120"
-      class="viewport"
-      (scrolledIndexChange)="onScroll()"
-    >
-      <div
-        *cdkVirtualFor="let item of items(); trackBy: trackByItem"
-        class="item"
-      >
+    <cdk-virtual-scroll-viewport itemSize="120" class="viewport">
+      <div *cdkVirtualFor="let item of dataSource; trackBy: trackByItem" class="item">
         @if (item) {
           <product-list-item [product]="item"></product-list-item>
         } @else {
@@ -56,38 +40,8 @@ import { ProductListItemComponent } from './product-list-item.component';
     </cdk-virtual-scroll-viewport>
   `,
 })
-export class ProductListComponent implements OnInit {
-  private service = inject(ProductService);
-  products = this.service.products;
-  loading = this.service.loading;
-
-  viewport = viewChild(CdkVirtualScrollViewport);
-
-  skeletonCount = computed(() =>
-    Math.min(this.service.loadSize, this.service.remaining())
-  );
-
-  items = computed(() => {
-    const list: Array<Product | undefined> = [...this.products()];
-    if (this.loading()) {
-      list.push(
-        ...Array.from({ length: this.skeletonCount() }, () => undefined)
-      );
-    }
-    return list;
-  });
-
-  ngOnInit() {
-    this.service.loadMore();
-  }
-
-  onScroll() {
-    const end = this.viewport()?.getRenderedRange().end;
-    const threshold = this.products().length - 5;
-    if (end && end >= threshold && this.service.hasMore() && !this.loading()) {
-      this.service.loadMore();
-    }
-  }
+export class ProductListComponent {
+  dataSource = inject(ProductDataSource);
 
   trackByItem(index: number, item: Product | undefined) {
     return item ? item.id : `skeleton-${index}`;
