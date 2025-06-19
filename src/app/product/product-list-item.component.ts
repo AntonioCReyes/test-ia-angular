@@ -20,7 +20,7 @@ import { Product } from './product';
     `,
   ],
   template: `
-    <a [routerLink]="['/products', product().id]" class="link">
+    <a [routerLink]="['/products', product().id]">
       <img
         [ngSrc]="product().imageUrl"
         alt="{{ product().name }}"
