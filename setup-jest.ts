@@ -1,3 +1,5 @@
+// Ensure Zone.js is loaded before configuring Angular's testing environment
+import 'zone.js';
 import 'zone.js/testing';
 import { getTestBed } from '@angular/core/testing';
 import {
